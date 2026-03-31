@@ -1,0 +1,20 @@
+# Build
+build/
+target/
+*.class
+*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Gradle
+.gradle/
+gradle/
+
+# OS
+.DS_Store
+
+# Env
+.env
