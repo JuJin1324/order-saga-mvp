@@ -4,6 +4,7 @@ build/
 target/
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # IDE
 .idea/
