@@ -8,7 +8,6 @@ version = '0.0.1-SNAPSHOT'
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     group = rootProject.group
@@ -22,6 +21,14 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
+
+configure(subprojects.findAll { it.name != 'saga-events' }) {
+    apply plugin: 'org.springframework.boot'
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-webmvc'
@@ -37,8 +44,8 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-jackson-test'
     }
+}
 
-    tasks.named('test') {
-        useJUnitPlatform()
-    }
+project(':saga-events') {
+    apply plugin: 'java-library'
 }
