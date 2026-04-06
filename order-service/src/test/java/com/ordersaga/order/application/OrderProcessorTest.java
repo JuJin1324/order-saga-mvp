@@ -1,9 +1,8 @@
 package com.ordersaga.order.application;
 
+import com.ordersaga.order.application.port.out.ChargePaymentPort;
 import com.ordersaga.order.fixture.CreateOrderCommandFixture;
-import com.ordersaga.order.fixture.OrderFixtureValues;
 import com.ordersaga.order.domain.OrderStatus;
-import com.ordersaga.order.infrastructure.PaymentClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class CreateOrderApplicationTest {
+class OrderProcessorTest {
 
     @Mock
     private OrderApplicationService orderApplicationService;
 
     @Mock
-    private PaymentClient paymentClient;
+    private ChargePaymentPort chargePaymentPort;
 
     private OrderProcessor sut;
 
@@ -30,7 +29,7 @@ class CreateOrderApplicationTest {
 
     @BeforeEach
     void setUp() {
-        sut = new OrderProcessor(orderApplicationService, paymentClient);
+        sut = new OrderProcessor(orderApplicationService, chargePaymentPort);
     }
 
     @Test
@@ -42,7 +41,7 @@ class CreateOrderApplicationTest {
         OrderResult confirmed = new OrderResult(ORDER_ID, OrderStatus.CONFIRMED, command.sku(), command.quantity(), command.amount());
 
         given(orderApplicationService.createOrder(command)).willReturn(created);
-        given(paymentClient.chargePayment(eq(ORDER_ID), eq(command.amount()), eq(command.sku()), eq(command.quantity()), eq(false)))
+        given(chargePaymentPort.chargePayment(eq(ORDER_ID), eq(command.amount()), eq(command.sku()), eq(command.quantity()), eq(false)))
                 .willReturn(true);
         given(orderApplicationService.confirmOrder(ORDER_ID)).willReturn(confirmed);
 
@@ -62,7 +61,7 @@ class CreateOrderApplicationTest {
         OrderResult failed = new OrderResult(ORDER_ID, OrderStatus.FAILED, command.sku(), command.quantity(), command.amount());
 
         given(orderApplicationService.createOrder(command)).willReturn(created);
-        given(paymentClient.chargePayment(eq(ORDER_ID), eq(command.amount()), eq(command.sku()), eq(command.quantity()), eq(true)))
+        given(chargePaymentPort.chargePayment(eq(ORDER_ID), eq(command.amount()), eq(command.sku()), eq(command.quantity()), eq(true)))
                 .willReturn(false);
         given(orderApplicationService.failOrder(ORDER_ID)).willReturn(failed);
 

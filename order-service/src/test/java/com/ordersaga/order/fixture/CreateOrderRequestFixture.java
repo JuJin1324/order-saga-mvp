@@ -1,6 +1,6 @@
 package com.ordersaga.order.fixture;
 
-import com.ordersaga.order.presentation.dto.CreateOrderRequest;
+import com.ordersaga.order.adapter.in.web.dto.CreateOrderRequest;
 
 import static com.ordersaga.order.fixture.OrderFixtureValues.*;
 

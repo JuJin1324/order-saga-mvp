@@ -1,12 +1,12 @@
-package com.ordersaga.order.presentation;
+package com.ordersaga.order.adapter.in.web;
 
 import java.util.Map;
 
 import com.ordersaga.order.application.CreateOrderCommand;
 import com.ordersaga.order.application.OrderApplicationService;
-import com.ordersaga.order.application.OrderProcessor;
 import com.ordersaga.order.application.OrderResult;
-import com.ordersaga.order.presentation.dto.CreateOrderRequest;
+import com.ordersaga.order.application.OrderProcessor;
+import com.ordersaga.order.adapter.in.web.dto.CreateOrderRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,4 +51,3 @@ public class OrderController {
         return orderProcessor.processOrder(command);
     }
 }
-

@@ -1,6 +1,6 @@
 package com.ordersaga.scenario.fixture;
 
-import com.ordersaga.order.presentation.dto.CreateOrderRequest;
+import com.ordersaga.order.adapter.in.web.dto.CreateOrderRequest;
 
 public class CreateOrderRequestFixture {
 

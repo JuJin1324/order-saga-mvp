@@ -1,4 +1,4 @@
-package com.ordersaga.order.infrastructure.kafka;
+package com.ordersaga.order.adapter.out.event;
 
 import com.ordersaga.saga.SagaTopics;
 import com.ordersaga.saga.event.OrderCreatedEvent;

@@ -1,4 +1,4 @@
-package com.ordersaga.order.presentation.dto;
+package com.ordersaga.order.adapter.in.web.dto;
 
 import java.math.BigDecimal;
 

@@ -1,9 +1,9 @@
-package com.ordersaga.order.presentation;
+package com.ordersaga.order.adapter.in.web;
 
+import com.ordersaga.order.adapter.in.web.dto.CreateOrderRequest;
+import com.ordersaga.order.application.port.out.ChargePaymentPort;
 import com.ordersaga.order.domain.OrderStatus;
 import com.ordersaga.order.fixture.CreateOrderRequestFixture;
-import com.ordersaga.order.infrastructure.PaymentClient;
-import com.ordersaga.order.presentation.dto.CreateOrderRequest;
 import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,14 +33,14 @@ class CreateOrderIntegrationTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private PaymentClient paymentClient;
+    private ChargePaymentPort chargePaymentPort;
 
     @Test
     @DisplayName("주문 생성 성공 시 CONFIRMED 상태로 응답한다")
     void paymentSuccess_returnsConfirmed() throws Exception {
         // Given
         CreateOrderRequest request = CreateOrderRequestFixture.normal();
-        given(paymentClient.chargePayment(any(), any(), any(), anyInt(), anyBoolean())).willReturn(true);
+        given(chargePaymentPort.chargePayment(any(), any(), any(), anyInt(), anyBoolean())).willReturn(true);
 
         // When & Then
         mockMvc.perform(post("/api/orders")
@@ -59,7 +59,7 @@ class CreateOrderIntegrationTest {
     void paymentFailure_returnsFailed() throws Exception {
         // Given
         CreateOrderRequest request = CreateOrderRequestFixture.withForceInventoryFailure();
-        given(paymentClient.chargePayment(any(), any(), any(), anyInt(), anyBoolean())).willReturn(false);
+        given(chargePaymentPort.chargePayment(any(), any(), any(), anyInt(), anyBoolean())).willReturn(false);
 
         // When & Then
         mockMvc.perform(post("/api/orders")
